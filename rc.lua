@@ -257,6 +257,8 @@ awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
 {description = "view next", group = "tag"}),
 awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
 {description = "go back", group = "tag"}),
+awful.key({ modkey         }, ",", function () awful.spawn("light -A 5") end, {description = "increase brightness", group = "custom"}),
+awful.key({ modkey, "Shift"}, ",", function () awful.spawn("light -U 5") end, {description = "decrease brightness", group = "custom"}),
 
 -- Non-empty tag browsing
 awful.key({ altkey }, "Left", function () lain.util.tag_view_nonempty(-1) end,
