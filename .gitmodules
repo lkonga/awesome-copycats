@@ -5,9 +5,6 @@
 [submodule "freedesktop"]
 	path = freedesktop
 	url = git://github.com/lcpz/awesome-freedesktop.git
-[submodule "awesome-wm-widgets"]
-	path = awesome-wm-widgets
-	url = https://github.com/streetturtle/awesome-wm-widgets.git
 [submodule "cyclefocus"]
 	path = cyclefocus
 	url = https://github.com/blueyed/awesome-cyclefocus.git
