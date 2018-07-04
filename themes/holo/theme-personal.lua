@@ -9,6 +9,12 @@ local gears = require("gears")
 local lain  = require("lain")
 local awful = require("awful")
 local wibox = require("wibox")
+-- require("volumearc")
+
+
+local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
+local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
+
 
 local string = string
 local os = { getenv = os.getenv }
@@ -35,6 +41,15 @@ theme.tasklist_fg_focus                         = "#4CB7DB"
 theme.menu_height                               = 20
 theme.menu_width                                = 160
 theme.menu_icon_size                            = 32
+
+-- Variables for Batteryarc widget
+theme.widget_main_color = "#74aeab"
+theme.widget_red = "#e53935"
+theme.widget_yellow = "#c0ca33"
+theme.widget_green = "#43a047"
+theme.widget_black = "#000000"
+theme.widget_transparent = "#00000000"
+
 theme.awesome_icon                              = theme.icon_dir .. "/awesome_icon_white.png"
 theme.awesome_icon_launcher                     = theme.icon_dir .. "/awesome_icon.png"
 theme.taglist_squares_sel                       = theme.icon_dir .. "/square_sel.png"
@@ -201,7 +216,6 @@ function ()
 end)))
 
 -- Battery
---[[
 local bat = lain.widget.bat({
     settings = function()
         bat_header = " Bat "
@@ -212,7 +226,6 @@ local bat = lain.widget.bat({
         widget:set_markup(markup.font(theme.font, markup(blue, bat_header) .. bat_p))
     end
 })
---]]
 
 --  fs
 -- theme.fs = lain.widget.fs({
@@ -338,7 +351,9 @@ function theme.at_screen_connect(s)
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
             --mail.widget,
-            --bat.widget,
+			-- batteryarc_widget,
+            bat.widget,
+			battery_widget,
             spr_right,
             musicwidget,
             bar,
