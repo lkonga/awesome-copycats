@@ -7,6 +7,3 @@
 [submodule "cyclefocus"]
 	path = cyclefocus
 	url = https://github.com/blueyed/awesome-cyclefocus.git
-[submodule "awesome-wm-widgets"]
-	path = awesome-wm-widgets
-	url = git@github.com:lkonga/awesome-wm-widgets.git
