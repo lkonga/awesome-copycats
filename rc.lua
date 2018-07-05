@@ -24,7 +24,7 @@ local cyclefocus = require('cyclefocus')
 
 -- }}}
 
--- {{{ Error handling
+ewrwerwer-- {{{ Error handling
 if awesome.startup_errors then
 	naughty.notify({ preset = naughty.config.presets.critical,
 	title = "Oops, there were errors during startup!",
@@ -246,7 +246,6 @@ end),
 -- modkey+Shift+Tab: backwards
 awful.key({ modkey, "Shift" }, "Tab", function(c)
     cyclefocus.cycle({modifier="Super_L"})
-end),
 -- Hotkeys
 awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
 {description = "show help", group="awesome"}),
