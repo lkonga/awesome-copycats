@@ -239,14 +239,6 @@ globalkeys = awful.util.table.join(
 -- https://github.com/lcpz/dots/blob/master/bin/screenshot
 awful.key({ altkey }, "p", function() os.execute("screenshot") end,
 {description = "take a screenshot", group = "hotkeys"}),
--- modkey+Tab: cycle through all clients.
-awful.key({ modkey }, "Tab", function(c)
-    cyclefocus.cycle({modifier="Super_L"})
-end),
--- modkey+Shift+Tab: backwards
-awful.key({ modkey, "Shift" }, "Tab", function(c)
-    cyclefocus.cycle({modifier="Super_L"})
-end),
 -- Hotkeys
 awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
 {description = "show help", group="awesome"}),
@@ -319,14 +311,23 @@ awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1
 {description = "focus the previous screen", group = "screen"}),
 awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
 {description = "jump to urgent client", group = "client"}),
-awful.key({ modkey,           }, "Tab",
-function ()
-	awful.client.focus.history.previous()
-	if client.focus then
-		client.focus:raise()
-	end
-end,
-{description = "go back", group = "client"}),
+-- awful.key({ modkey,           }, "Tab",
+-- function ()
+-- 	awful.client.focus.history.previous()
+-- 	if client.focus then
+-- 		client.focus:raise()
+-- 	end
+-- end,
+-- {description = "go back", group = "client"}),
+
+-- modkey+Tab: cycle through all clients.
+awful.key({ modkey }, "Tab", function(c)
+    cyclefocus.cycle({modifier="Super_L"})
+end),
+-- modkey+Shift+Tab: backwards
+awful.key({ modkey, "Shift" }, "Tab", function(c)
+    cyclefocus.cycle({modifier="Super_L"})
+end),
 
 -- Show/Hide Wibox
 awful.key({ modkey }, "b", function ()
