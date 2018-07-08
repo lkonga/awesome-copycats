@@ -10,3 +10,6 @@
 [submodule "awesome-wm-widgets"]
 	path = awesome-wm-widgets
 	url = git@github.com:lkonga/awesome-wm-widgets.git
+[submodule "awesome-cyclefocus"]
+	path = awesome-cyclefocus
+	url = git@github.com:lkonga/awesome-cyclefocus.git
