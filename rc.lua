@@ -318,14 +318,14 @@ awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1
 {description = "focus the previous screen", group = "screen"}),
 awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
 {description = "jump to urgent client", group = "client"}),
--- awful.key({ modkey,           }, "Tab",
--- function ()
--- 	awful.client.focus.history.previous()
--- 	if client.focus then
--- 		client.focus:raise()
--- 	end
--- end,
--- {description = "go back", group = "client"}),
+awful.key({ altkey,           }, "Tab",
+function ()
+	awful.client.focus.history.previous()
+	if client.focus then
+		client.focus:raise()
+	end
+end,
+{description = "go back", group = "client"}),
 
 -- modkey+Tab: cycle through all clients.
 awful.key({ modkey }, "Tab", function(c)
