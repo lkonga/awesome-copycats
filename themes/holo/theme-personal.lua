@@ -50,6 +50,10 @@ theme.widget_green = "#43a047"
 theme.widget_black = "#000000"
 theme.widget_transparent = "#00000000"
 
+
+-- cpu temp widget
+theme.widget_temp                               = theme.icon_dir .. "/temp.png"
+
 theme.awesome_icon                              = theme.icon_dir .. "/awesome_icon_white.png"
 theme.awesome_icon_launcher                     = theme.icon_dir .. "/awesome_icon.png"
 theme.taglist_squares_sel                       = theme.icon_dir .. "/square_sel.png"
@@ -227,6 +231,14 @@ local bat = lain.widget.bat({
     end
 })
 
+-- Coretemp
+local tempicon = wibox.widget.imagebox(theme.widget_temp)
+local temp = lain.widget.temp({
+    settings = function()
+        widget:set_markup(markup.font(theme.font, " " .. coretemp_now .. "°C "))
+    end
+})
+
 --  fs
 -- theme.fs = lain.widget.fs({
 --     notification_preset = { bg = theme.bg_normal, font = "Monospace 9" },
@@ -394,6 +406,9 @@ function theme.at_screen_connect(s)
             bat.widget,
             battery_widget,
             cpuwidget,
+            -- bottom_bar,
+            tempicon,
+            temp.widget,
             bottom_bar,
             calendar_icon,
             calendarwidget,

@@ -59,15 +59,22 @@ end
 
 -- run_once({ "xrandr --output eDP1 --scale 0.8x0.8","export GDK_SCALE=2","export GDK_DPI_SCALE=0.6","xrandr --dpi 271","xinput disable 9","xinput disable 8","unclutter -root","play-with-mpv","xscreensaver -nosplash", "mpd"}) -- entries must be comma-separated
 os.execute("killall caffeine-indicator")
-run_once({ "export GDK_SCALE=2","export GDK_DPI_SCALE=0.6","unclutter -root","xscreensaver -nosplash", "mpd ~/.mpd/mpd.conf","xmodmap ~/.Xmodmap_es","nm-applet","redshift-gtk","play-with-mpv", "caffeine-indicator"}) -- entries must be comma-separated
+run_once({ "unclutter -root","xscreensaver -nosplash", "mpd ~/.mpd/mpd.conf","xmodmap ~/.Xmodmap_es","nm-applet","redshift-gtk","play-with-mpv", "caffeine-indicator"}) -- entries must be comma-separated
 -- }}}
 
 -- run_once({"xrandr --dpi 271"}) -- we want 267? as this is actual dpi of a 3000x2000
 -- -- run_once({"xrandr --dpi 280"}) -- this sets 275? but we want 267?
--- os.execute("sleep 1")
+run_once({"xrandr --dpi 160"}) -- this sets 275? but we want 267?
+os.execute("sleep 1")
 -- run_once({"xrandr --output eDP1 --scale 1x1"});
 -- os.execute("sleep 2")
 -- run_once({"xrandr --output eDP1 --scale 0.8x0.8"})
+
+-- os.execute("sleep 1")
+-- run_once({"export GDK_SCALE=2"});
+-- os.execute("sleep 1")
+-- run_once({"export GDK_DPI_SCALE=0.6"});
+-- os.execute("sleep 1")
 
 -- {{{ Variable definitions
 
