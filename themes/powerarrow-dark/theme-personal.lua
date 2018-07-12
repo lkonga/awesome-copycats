@@ -103,7 +103,8 @@ local clock = awful.widget.watch(
 theme.cal = lain.widget.calendar({
     attach_to = { clock },
     notification_preset = {
-        font = "xos4 Terminus 10",
+        -- font = "xos4 Terminus 10",
+        font = "Tamsyn 10",
         fg   = theme.fg_normal,
         bg   = theme.bg_normal
     }
@@ -191,13 +192,13 @@ local temp = lain.widget.temp({
 })
 
 -- / fs
-local fsicon = wibox.widget.imagebox(theme.widget_hdd)
-theme.fs = lain.widget.fs({
-    notification_preset = { fg = theme.fg_normal, bg = theme.bg_normal, font = "xos4 Terminus 10" },
-    settings = function()
-        widget:set_markup(markup.font(theme.font, " " .. fs_now["/"].percentage .. "% "))
-    end
-})
+-- local fsicon = wibox.widget.imagebox(theme.widget_hdd)
+-- theme.fs = lain.widget.fs({
+--     notification_preset = { fg = theme.fg_normal, bg = theme.bg_normal, font = "xos4 Terminus 10" },
+--     settings = function()
+--         widget:set_markup(markup.font(theme.font, " " .. fs_now["/"].percentage .. "% "))
+--     end
+-- })
 
 -- Battery
 local baticon = wibox.widget.imagebox(theme.widget_battery)
@@ -324,8 +325,8 @@ function theme.at_screen_connect(s)
             tempicon,
             temp.widget,
             arrl_ld,
-            wibox.container.background(fsicon, theme.bg_focus),
-            wibox.container.background(theme.fs.widget, theme.bg_focus),
+            -- wibox.container.background(fsicon, theme.bg_focus),
+            -- wibox.container.background(theme.fs.widget, theme.bg_focus),
             arrl_dl,
             baticon,
             bat.widget,

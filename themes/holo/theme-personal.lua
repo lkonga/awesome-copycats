@@ -24,7 +24,11 @@ local theme                                     = {}
 theme.default_dir                               = require("awful.util").get_themes_dir() .. "default"
 theme.icon_dir                                  = os.getenv("HOME") .. "/.config/awesome/themes/holo/icons"
 theme.wallpaper                                 = os.getenv("HOME") .. "/.config/awesome/themes/holo/wall.png"
-theme.font                                      = "Roboto Bold 10"
+-- theme.font                                      = "Terminus Bold 10"
+-- theme.font                                      = "Roboto Bold 10"
+theme.font                                      = "Tamsyn Bold 10"
+-- theme.taglist_font                              = "Terminus Medium 8"
+-- theme.taglist_font                              = "Roboto Condensed Regular 8"
 theme.taglist_font                              = "Roboto Condensed Regular 8"
 theme.fg_normal                                 = "#FFFFFF"
 theme.fg_focus                                  = "#0099CC"
@@ -133,11 +137,12 @@ local calbg = wibox.container.background(mytextcalendar, theme.bg_focus, gears.s
 local calendarwidget = wibox.container.margin(calbg, 0, 0, 5, 5)
 lain.widget.calendar({
     attach_to = { mytextclock, mytextcalendar },
+    cal                 = "/usr/bin/cal -h",
     notification_preset = {
         fg = "#FFFFFF",
         bg = theme.bg_normal,
         position = "bottom_right",
-        font = "Monospace 10"
+        font = "Tamsyn Bold 10"
     }
 })
 

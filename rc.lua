@@ -201,17 +201,17 @@ local myawesomemenu = {
 	{ "restart", awesome.restart },
 	{ "quit", function() awesome.quit() end }
 }
-awful.util.mymainmenu = freedesktop.menu.build({
-	icon_size = beautiful.menu_height or 16,
-	before = {
-		{ "Awesome", myawesomemenu, beautiful.awesome_icon },
-		-- other triads can be put here
-	},
-	after = {
-		{ "Open terminal", terminal },
-		-- other triads can be put here
-	}
-})
+-- awful.util.mymainmenu = freedesktop.menu.build({
+-- 	icon_size = beautiful.menu_height or 16,
+-- 	before = {
+-- 		{ "Awesome", myawesomemenu, beautiful.awesome_icon },
+-- 		-- other triads can be put here
+-- 	},
+-- 	after = {
+-- 		{ "Open terminal", terminal },
+-- 		-- other triads can be put here
+-- 	}
+-- })
 --menubar.utils.terminal = terminal -- Set the Menubar terminal for applications that require it
 -- }}}
 
