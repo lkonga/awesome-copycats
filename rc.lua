@@ -59,7 +59,7 @@ end
 
 -- run_once({ "xrandr --output eDP1 --scale 0.8x0.8","export GDK_SCALE=2","export GDK_DPI_SCALE=0.6","xrandr --dpi 271","xinput disable 9","xinput disable 8","unclutter -root","play-with-mpv","xscreensaver -nosplash", "mpd"}) -- entries must be comma-separated
 os.execute("killall caffeine-indicator")
-run_once({ "unclutter -root","xscreensaver -nosplash", "mpd ~/.mpd/mpd.conf","xmodmap ~/.Xmodmap_es","nm-applet","redshift-gtk","play-with-mpv", "caffeine-indicator"}) -- entries must be comma-separated
+run_once({ "unclutter","xscreensaver -nosplash", "mpd ~/.mpd/mpd.conf","xmodmap ~/.Xmodmap","nm-applet","redshift-gtk","play-with-mpv", "caffeine-indicator"}) -- entries must be comma-separated
 -- }}}
 
 -- run_once({"xrandr --dpi 271"}) -- we want 267? as this is actual dpi of a 3000x2000
@@ -201,17 +201,17 @@ local myawesomemenu = {
 	{ "restart", awesome.restart },
 	{ "quit", function() awesome.quit() end }
 }
--- awful.util.mymainmenu = freedesktop.menu.build({
--- 	icon_size = beautiful.menu_height or 16,
--- 	before = {
--- 		{ "Awesome", myawesomemenu, beautiful.awesome_icon },
--- 		-- other triads can be put here
--- 	},
--- 	after = {
--- 		{ "Open terminal", terminal },
--- 		-- other triads can be put here
--- 	}
--- })
+awful.util.mymainmenu = freedesktop.menu.build({
+	icon_size = beautiful.menu_height or 16,
+	before = {
+		{ "Awesome", myawesomemenu, beautiful.awesome_icon },
+		-- other triads can be put here
+	},
+	after = {
+		{ "Open terminal", terminal },
+		-- other triads can be put here
+	}
+})
 --menubar.utils.terminal = terminal -- Set the Menubar terminal for applications that require it
 -- }}}
 
@@ -678,6 +678,14 @@ awful.rules.rules = {
 	{ rule = { class = "Firefox" },
 	properties = { screen = 1, tag = awful.util.tagnames[2] } },
 
+    -- Set urxvt position to center
+    { rule = { class = "urxvt" },
+    properties = { floating = true },
+    callback = function (c)
+        awful.placement.centered(c,nil)
+    end
+},
+
 	{ rule = { class = "Gimp", role = "gimp-image-window" },
 	properties = { maximized = true } },
 }
@@ -749,11 +757,25 @@ layout  = wibox.layout.flex.horizontal
 end)
 
 -- Enable sloppy focus, so that focus follows mouse.
+-- client.connect_signal("mouse::enter", function(c)
+-- 	if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
+-- 		and awful.client.focus.filter(c) then
+-- 		client.focus = c
+-- 	end
+-- end)
+
+--
+-- Enable sloppy focus.
+local sloppyfocus_last = {c=nil}
 client.connect_signal("mouse::enter", function(c)
-	if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
-		and awful.client.focus.filter(c) then
-		client.focus = c
-	end
+    if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
+            and awful.client.focus.filter(c) then
+        -- Skip focusing the client if the mouse wasn't moved.
+        if c ~= sloppyfocus_last.c then
+            client.focus = c
+            sloppyfocus_last.c = c
+        end
+    end
 end)
 
 -- No border for maximized clients

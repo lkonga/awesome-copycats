@@ -244,9 +244,18 @@ local temp = lain.widget.temp({
     end
 })
 
---  fs
+ -- -- fs
 -- theme.fs = lain.widget.fs({
 --     notification_preset = { bg = theme.bg_normal, font = "Monospace 9" },
+-- })
+
+-- -- / fs
+-- local fsicon = wibox.widget.imagebox(theme.widget_hdd)
+-- theme.fs = lain.widget.fs({
+--     notification_preset = { fg = theme.fg_normal, bg = theme.bg_normal, font = "xos4 Terminus 10" },
+--     settings = function()
+--         widget:set_markup(markup.font(theme.font, " " .. fs_now["/"].percentage .. "% "))
+--     end
 -- })
 
 -- ALSA volume bar
@@ -412,6 +421,9 @@ function theme.at_screen_connect(s)
             battery_widget,
             cpuwidget,
             -- bottom_bar,
+            -- wibox.container.background(fsicon, theme.bg_focus),
+            -- fsicon,
+            -- wibox.container.background(theme.fs.widget, theme.bg_focus),
             tempicon,
             temp.widget,
             bottom_bar,
