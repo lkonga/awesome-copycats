@@ -59,7 +59,7 @@ end
 
 -- run_once({ "xrandr --output eDP1 --scale 0.8x0.8","export GDK_SCALE=2","export GDK_DPI_SCALE=0.6","xrandr --dpi 271","xinput disable 9","xinput disable 8","unclutter -root","play-with-mpv","xscreensaver -nosplash", "mpd"}) -- entries must be comma-separated
 os.execute("killall caffeine-indicator")
-run_once({ "unclutter -root","xscreensaver -nosplash", "mpd ~/.mpd/mpd.conf","xmodmap ~/.Xmodmap_es","nm-applet","redshift-gtk","play-with-mpv", "caffeine-indicator"}) -- entries must be comma-separated
+run_once({ "unclutter -root","xscreensaver -nosplash","export GDK_SCALE=2","export GDK_DPI_SCALE=0.6", "mpd ~/.mpd/mpd.conf","xmodmap ~/.Xmodmap","nm-applet","redshift-gtk","play-with-mpv", "caffeine-indicator"}) -- entries must be comma-separated
 -- }}}
 
 -- run_once({"xrandr --dpi 271"}) -- we want 267? as this is actual dpi of a 3000x2000
@@ -102,9 +102,10 @@ local browser      = "firefox"
 local guieditor    = "atom"
 
 awful.util.terminal = terminal
-awful.util.tagnames = { "1", "2", "3", "4", "5" }
+awful.util.tagnames = { "term", "www", "ide", "im", "other" }
 awful.layout.layouts = {
-	lain.layout.termfair,
+	-- lain.layout.termfair,
+	awful.layout.suit.tile,
 	--lain.layout.termfair.center,
 	awful.layout.suit.floating,
 	awful.layout.suit.tile,
@@ -201,17 +202,18 @@ local myawesomemenu = {
 	{ "restart", awesome.restart },
 	{ "quit", function() awesome.quit() end }
 }
--- awful.util.mymainmenu = freedesktop.menu.build({
--- 	icon_size = beautiful.menu_height or 16,
--- 	before = {
--- 		{ "Awesome", myawesomemenu, beautiful.awesome_icon },
--- 		-- other triads can be put here
--- 	},
--- 	after = {
--- 		{ "Open terminal", terminal },
--- 		-- other triads can be put here
--- 	}
--- })
+
+awful.util.mymainmenu = freedesktop.menu.build({
+	icon_size = beautiful.menu_height or 16,
+	before = {
+		{ "Awesome", myawesomemenu, beautiful.awesome_icon },
+		-- other triads can be put here
+	},
+	after = {
+		{ "Open terminal", terminal },
+		-- other triads can be put here
+	}
+})
 --menubar.utils.terminal = terminal -- Set the Menubar terminal for applications that require it
 -- }}}
 
