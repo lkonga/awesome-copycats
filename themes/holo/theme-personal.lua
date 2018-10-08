@@ -205,12 +205,12 @@ function () awful.spawn(theme.musicplr) end)))
 prev_icon:buttons(my_table.join(awful.button({}, 1,
 function ()
     awful.spawn.with_shell("mpc prev")
-    theme.mpd.update()
+    -- theme.mpd.update()
 end)))
 next_icon:buttons(my_table.join(awful.button({}, 1,
 function ()
     awful.spawn.with_shell("mpc next")
-    theme.mpd.update()
+    -- theme.mpd.update()
 end)))
 stop_icon:buttons(my_table.join(awful.button({}, 1,
 function ()

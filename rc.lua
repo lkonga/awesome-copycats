@@ -59,7 +59,7 @@ end
 
 -- run_once({ "xrandr --output eDP1 --scale 0.8x0.8","export GDK_SCALE=2","export GDK_DPI_SCALE=0.6","xrandr --dpi 271","xinput disable 9","xinput disable 8","unclutter -root","play-with-mpv","xscreensaver -nosplash", "mpd"}) -- entries must be comma-separated
 os.execute("killall caffeine-indicator")
-run_once({ "unclutter -root","xscreensaver -nosplash","export GDK_SCALE=2","export GDK_DPI_SCALE=0.6", "mpd ~/.mpd/mpd.conf","xmodmap ~/.Xmodmap","nm-applet","redshift-gtk","play-with-mpv", "caffeine-indicator"}) -- entries must be comma-separated
+run_once({ "unclutter -idle 10 -root","xscreensaver -nosplash","export GDK_SCALE=2","export GDK_DPI_SCALE=0.6", "mpd ~/.mpd/mpd.conf","xmodmap ~/.Xmodmap","nm-applet","redshift-gtk","play-with-mpv", "caffeine-indicator"}) -- entries must be comma-separated
 -- }}}
 
 -- run_once({"xrandr --dpi 271"}) -- we want 267? as this is actual dpi of a 3000x2000
@@ -329,14 +329,25 @@ function ()
 end,
 {description = "go back", group = "client"}),
 
--- modkey+Tab: cycle through all clients.
-awful.key({ modkey }, "Tab", function(c)
-    cyclefocus.cycle({modifier="Super_L"})
-end),
--- modkey+Shift+Tab: backwards
-awful.key({ modkey, "Shift" }, "Tab", function(c)
-    cyclefocus.cycle({modifier="Super_L"})
-end),
+-- -- modkey+Tab: cycle through all clients.
+-- awful.key({ modkey }, "Tab", function(c)
+--     cyclefocus.cycle({modifier="Super_L"})
+-- end),
+-- -- modkey+Shift+Tab: backwards
+-- awful.key({ modkey, "Shift" }, "Tab", function(c)
+--     cyclefocus.cycle({modifier="Super_L"})
+-- end),
+
+-- Alt-Tab: cycle through clients on the same screen.
+-- This must be a clientkeys mapping to have source_c available in the callback.
+cyclefocus.key({ "Mod1", }, "Tab", {
+    -- cycle_filters as a function callback:
+    -- cycle_filters = { function (c, source_c) return c.screen == source_c.screen end },
+
+    -- cycle_filters from the default filters:
+    cycle_filters = { cyclefocus.filters.same_screen, cyclefocus.filters.common_tag },
+    keys = {'Tab', 'ISO_Left_Tab'}  -- default, could be left out
+}),
 
 -- Show/Hide Wibox
 awful.key({ modkey }, "b", function ()
@@ -412,8 +423,8 @@ awful.key({ altkey, "Control" }, "c", function () lain.widget.calendar.show(7) e
 {description = "show calendar", group = "widgets"}),
 awful.key({ altkey, }, "h", function () if beautiful.fs then beautiful.fs.show(7) end end,
 {description = "show filesystem", group = "widgets"}),
-awful.key({ altkey, }, "w", function () if beautiful.weather then beautiful.weather.show(7) end end,
-{description = "show weather", group = "widgets"}),
+-- awful.key({ altkey, }, "w", function () if beautiful.weather then beautiful.weather.show(7) end end,
+-- {description = "show weather", group = "widgets"}),
 
 -- Brightness
 awful.key({ }, "XF86MonBrightnessUp", function () awful.util.spawn("xbacklight -inc 10") end,
@@ -470,13 +481,13 @@ end,
 awful.key({ modkey, "Control" }, "Left",
 function ()
 	awful.spawn.with_shell("mpc prev")
-	beautiful.mpd.update()
+	-- beautiful.mpd.update()
 end,
 {description = "mpc prev", group = "widgets"}),
 awful.key({ modkey, "Control" }, "Right",
 function ()
 	awful.spawn.with_shell("mpc next")
-	beautiful.mpd.update()
+	-- beautiful.mpd.update()
 end,
 {description = "mpc next", group = "widgets"}),
 awful.key({ altkey }, "0",
@@ -680,6 +691,12 @@ awful.rules.rules = {
 	{ rule = { class = "Firefox" },
 	properties = { screen = 1, tag = awful.util.tagnames[2] } },
 
+	{ rule = { class = "Slack" },
+	properties = { screen = 1, tag = awful.util.tagnames[4] } },
+
+	{ rule = { class = "Telegram" },
+	properties = { screen = 1, tag = awful.util.tagnames[4] } },
+
 	{ rule = { class = "Gimp", role = "gimp-image-window" },
 	properties = { maximized = true } },
 }
@@ -750,11 +767,16 @@ layout  = wibox.layout.flex.horizontal
 }
 end)
 
--- Enable sloppy focus, so that focus follows mouse.
+-- Enable sloppy focus.
+local sloppyfocus_last = {c=nil}
 client.connect_signal("mouse::enter", function(c)
 	if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
 		and awful.client.focus.filter(c) then
-		client.focus = c
+		-- Skip focusing the client if the mouse wasn't moved.
+		if c ~= sloppyfocus_last.c then
+			client.focus = c
+			sloppyfocus_last.c = c
+		end
 	end
 end)
 
