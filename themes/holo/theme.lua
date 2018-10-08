@@ -112,7 +112,7 @@ local mytextcalendar = wibox.widget.textclock(markup.fontfg(theme.font, "#FFFFFF
 local calendar_icon = wibox.widget.imagebox(theme.calendar)
 local calbg = wibox.container.background(mytextcalendar, theme.bg_focus, gears.shape.rectangle)
 local calendarwidget = wibox.container.margin(calbg, 0, 0, 5, 5)
-lain.widget.calendar({
+theme.cal = lain.widget.cal({
     attach_to = { mytextclock, mytextcalendar },
     notification_preset = {
         fg = "#FFFFFF",
@@ -122,9 +122,9 @@ lain.widget.calendar({
     }
 })
 
---[[ Mail IMAP check
--- commented because it needs to be set before use
-local mail = lain.widget.imap({
+-- Mail IMAP check
+--[[ commented because it needs to be set before use
+theme.mail = lain.widget.imap({
     timeout  = 180,
     server   = "server",
     mail     = "mail",
@@ -180,28 +180,27 @@ musicwidget:buttons(my_table.join(awful.button({ }, 1,
 function () awful.spawn(theme.musicplr) end)))
 prev_icon:buttons(my_table.join(awful.button({}, 1,
 function ()
-    awful.spawn.with_shell("mpc prev")
+    os.execute("mpc prev")
     theme.mpd.update()
 end)))
 next_icon:buttons(my_table.join(awful.button({}, 1,
 function ()
-    awful.spawn.with_shell("mpc next")
+    os.execute("mpc next")
     theme.mpd.update()
 end)))
 stop_icon:buttons(my_table.join(awful.button({}, 1,
 function ()
     play_pause_icon:set_image(theme.play)
-    awful.spawn.with_shell("mpc stop")
+    os.execute("mpc stop")
     theme.mpd.update()
 end)))
 play_pause_icon:buttons(my_table.join(awful.button({}, 1,
 function ()
-    awful.spawn.with_shell("mpc toggle")
+    os.execute("mpc toggle")
     theme.mpd.update()
 end)))
 
 -- Battery
---[[
 local bat = lain.widget.bat({
     settings = function()
         bat_header = " Bat "
@@ -212,12 +211,13 @@ local bat = lain.widget.bat({
         widget:set_markup(markup.font(theme.font, markup(blue, bat_header) .. bat_p))
     end
 })
---]]
 
---  fs
+-- / fs
+--[[ commented because it needs Gio/Glib >= 2.54
 theme.fs = lain.widget.fs({
     notification_preset = { bg = theme.bg_normal, font = "Monospace 9" },
 })
+--]]
 
 -- ALSA volume bar
 theme.volume = lain.widget.alsabar({
@@ -337,7 +337,7 @@ function theme.at_screen_connect(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
-            --mail.widget,
+            --theme.mail.widget,
             --bat.widget,
             spr_right,
             musicwidget,

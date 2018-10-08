@@ -113,7 +113,7 @@ local markup = lain.util.markup
 --os.setlocale(os.getenv("LANG")) -- to localize the clock
 local mytextclock = wibox.widget.textclock(markup("#FFFFFF", "%a %d %b, %H:%M"))
 mytextclock.font = theme.font
-lain.widget.calendar({
+theme.cal = lain.widget.cal({
     attach_to = { mytextclock },
     notification_preset = {
         fg = "#FFFFFF",
@@ -209,22 +209,22 @@ theme.volume = lain.widget.alsabar({
 })
 volicon:buttons(my_table.join (
           awful.button({}, 1, function()
-            awful.spawn.with_shell(string.format("%s -e alsamixer", awful.util.terminal))
+            awful.spawn(string.format("%s -e alsamixer", awful.util.terminal))
           end),
           awful.button({}, 2, function()
-            awful.spawn(string.format("%s set %s 100%%", theme.volume.cmd, theme.volume.channel))
+            os.execute(string.format("%s set %s 100%%", theme.volume.cmd, theme.volume.channel))
             theme.volume.notify()
           end),
           awful.button({}, 3, function()
-            awful.spawn(string.format("%s set %s toggle", theme.volume.cmd, theme.volume.togglechannel or theme.volume.channel))
+            os.execute(string.format("%s set %s toggle", theme.volume.cmd, theme.volume.togglechannel or theme.volume.channel))
             theme.volume.notify()
           end),
           awful.button({}, 4, function()
-            awful.spawn(string.format("%s set %s 1%%+", theme.volume.cmd, theme.volume.channel))
+            os.execute(string.format("%s set %s 1%%+", theme.volume.cmd, theme.volume.channel))
             theme.volume.notify()
           end),
           awful.button({}, 5, function()
-            awful.spawn(string.format("%s set %s 1%%-", theme.volume.cmd, theme.volume.channel))
+            os.execute(string.format("%s set %s 1%%-", theme.volume.cmd, theme.volume.channel))
             theme.volume.notify()
           end)
 ))
@@ -248,12 +248,12 @@ local mywifisig = awful.widget.watch(
     function(widget, stdout)
         local carrier, perc = stdout:match("(%d)-(%d+)")
         local tiptext = stdout:gsub("(%d)-(%d+)", ""):gsub("%s+$", "")
+        perc = tonumber(perc)
 
-        if carrier == "1" then
+        if carrier == "1" or not perc then
             wificon:set_image(theme.wifidisc)
             wifitooltip:set_markup("No carrier")
         else
-            perc = tonumber(perc)
             if perc <= 5 then
                 wificon:set_image(theme.wifinone)
             elseif perc <= 25 then
