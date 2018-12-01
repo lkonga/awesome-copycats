@@ -59,12 +59,13 @@ end
 
 -- run_once({ "xrandr --output eDP1 --scale 0.8x0.8","export GDK_SCALE=2","export GDK_DPI_SCALE=0.6","xrandr --dpi 271","xinput disable 9","xinput disable 8","unclutter -root","play-with-mpv","xscreensaver -nosplash", "mpd"}) -- entries must be comma-separated
 os.execute("killall caffeine-indicator")
-run_once({ "unclutter --root","xscreensaver -nosplash", "mpd ~/.mpd/mpd.conf","xmodmap ~/.Xmodmap","nm-applet","redshift-gtk","play-with-mpv", "caffeine-indicator"}) -- entries must be comma-separated
+run_once({ "unclutter --root","xscreensaver -nosplash", "mpd ~/.mpd/mpd.conf","xmodmap ~/.Xmodmap","nm-applet","redshift-gtk","play-with-mpv", "caffeine-indicator", "syndaemon -i 0.50 -m 0.10 -d -K"}) -- entries must be comma-separated
 -- }}}
 
 -- run_once({"xrandr --dpi 271"}) -- we want 267? as this is actual dpi of a 3000x2000
 -- -- run_once({"xrandr --dpi 280"}) -- this sets 275? but we want 267?
-run_once({"xrandr --dpi 160"}) -- this sets 275? but we want 267?
+-- run_once({"xrandr --dpi 160"}) -- this sets 275? but we want 267?
+run_once({"xrandr --dpi 192"}) -- this sets 275? but we want 267?
 os.execute("sleep 1")
 -- run_once({"xrandr --output eDP1 --scale 1x1"});
 -- os.execute("sleep 2")
@@ -204,17 +205,17 @@ local myawesomemenu = {
 	{ "quit", function() awesome.quit() end }
 }
 
--- awful.util.mymainmenu = freedesktop.menu.build({
--- 	icon_size = beautiful.menu_height or 16,
--- 	before = {
--- 		{ "Awesome", myawesomemenu, beautiful.awesome_icon },
--- 		-- other triads can be put here
--- 	},
--- 	after = {
--- 		{ "Open terminal", terminal },
--- 		-- other triads can be put here
--- 	}
--- })
+awful.util.mymainmenu = freedesktop.menu.build({
+	icon_size = beautiful.menu_height or 16,
+	before = {
+		{ "Awesome", myawesomemenu, beautiful.awesome_icon },
+		-- other triads can be put here
+	},
+	after = {
+		{ "Open terminal", terminal },
+		-- other triads can be put here
+	}
+})
 --menubar.utils.terminal = terminal -- Set the Menubar terminal for applications that require it
 -- }}}
 
@@ -330,14 +331,25 @@ function ()
 end,
 {description = "go back", group = "client"}),
 
--- modkey+Tab: cycle through all clients.
-awful.key({ modkey }, "Tab", function(c)
-    cyclefocus.cycle({modifier="Super_L"})
-end),
--- modkey+Shift+Tab: backwards
-awful.key({ modkey, "Shift" }, "Tab", function(c)
-    cyclefocus.cycle({modifier="Super_L"})
-end),
+-- -- modkey+Tab: cycle through all clients.
+-- awful.key({ modkey }, "Tab", function(c)
+--     cyclefocus.cycle({modifier="Super_L"})
+-- end),
+-- -- modkey+Shift+Tab: backwards
+-- awful.key({ modkey, "Shift" }, "Tab", function(c)
+--     cyclefocus.cycle({modifier="Super_L"})
+-- end),
+
+-- Alt-Tab: cycle through clients on the same screen.
+-- This must be a clientkeys mapping to have source_c available in the callback.
+cyclefocus.key({ "Mod1", }, "Tab", {
+    -- cycle_filters as a function callback:
+    -- cycle_filters = { function (c, source_c) return c.screen == source_c.screen end },
+
+    -- cycle_filters from the default filters:
+    cycle_filters = { cyclefocus.filters.same_screen, cyclefocus.filters.common_tag },
+    keys = {'Tab', 'ISO_Left_Tab'}  -- default, could be left out
+}),
 
 -- Show/Hide Wibox
 awful.key({ modkey }, "b", function ()
