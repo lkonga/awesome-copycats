@@ -11,9 +11,9 @@ local awful = require("awful")
 local wibox = require("wibox")
 -- require("volumearc")
 
-local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
-local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
-local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
+-- local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
+-- local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
+-- local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
 
 
 local string = string
@@ -380,7 +380,7 @@ function theme.at_screen_connect(s)
 			-- batteryarc_widget,
             -- bat.widget,
 			-- battery_widget,
-			brightness_widget,
+			-- brightness_widget,
             spr_right,
             musicwidget,
             bar,
@@ -418,7 +418,7 @@ function theme.at_screen_connect(s)
             bottom_bar,
             cpu_icon,
             bat.widget,
-            battery_widget,
+            -- battery_widget,
             cpuwidget,
             -- bottom_bar,
             -- wibox.container.background(fsicon, theme.bg_focus),

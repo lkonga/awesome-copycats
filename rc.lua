@@ -59,14 +59,20 @@ end
 
 -- run_once({ "xrandr --output eDP1 --scale 0.8x0.8","export GDK_SCALE=2","export GDK_DPI_SCALE=0.6","xrandr --dpi 271","xinput disable 9","xinput disable 8","unclutter -root","play-with-mpv","xscreensaver -nosplash", "mpd"}) -- entries must be comma-separated
 os.execute("killall caffeine-indicator")
-run_once({ "unclutter --root","xscreensaver -nosplash", "mpd ~/.mpd/mpd.conf","xmodmap ~/.Xmodmap","nm-applet","redshift-gtk","play-with-mpv", "caffeine-indicator", "syndaemon -i 0.50 -m 0.10 -d -K"}) -- entries must be comma-separated
+-- run_once({ "unclutter --root","xscreensaver -nosplash", "mpd ~/.mpd/mpd.conf","xmodmap ~/.Xmodmap_i35","nm-applet","redshift-gtk","play-with-mpv", "caffeine-indicator", "syndaemon -i 0.50 -m 0.10 -d -K"}) -- entries must be comma-separated
+run_once({ "unclutter --root","xscreensaver -nosplash", "mpd ~/.mpd/mpd.conf", "urxvtd -q -f -o", "nm-applet","redshift-gtk","play-with-mpv", "caffeine-indicator", "syndaemon -i 0.50 -m 0.10 -d -K"}) -- entries must be comma-separated
 -- }}}
 
 -- run_once({"xrandr --dpi 271"}) -- we want 267? as this is actual dpi of a 3000x2000
 -- -- run_once({"xrandr --dpi 280"}) -- this sets 275? but we want 267?
 -- run_once({"xrandr --dpi 160"}) -- this sets 275? but we want 267?
-run_once({"xrandr --dpi 192"}) -- this sets 275? but we want 267?
+-- run_once({"xrandr --dpi 96"}) -- this sets 275? but we want 267?
+--
+-- run_once({"xrandr --dpi 192"}) -- this sets 275? but we want 267?
+run_once({"xrandr --dpi 192"}) -- this yields bigger fonts on awesome wm and bigger chrome fonts (than 175) - terminal fonts seems to remain unchanged?
+-- run_once({"xrandr --dpi 175"}) -- this sets 275? but we want 267?
 os.execute("sleep 1")
+-- run_once({"xmodmap ~/.Xmodmap_i35"}) 
 -- run_once({"xrandr --output eDP1 --scale 1x1"});
 -- os.execute("sleep 2")
 -- run_once({"xrandr --output eDP1 --scale 0.8x0.8"})
@@ -96,7 +102,7 @@ local chosen_theme = themes[4]
 local modkey       = "Mod4"
 local altkey       = "Mod1"
 -- local terminal     = "xterm"
-local terminal     = "urxvt"
+local terminal     = "urxvtc"
 local editor       = os.getenv("EDITOR") or "nano"
 local gui_editor   = "gvim"
 local browser      = "firefox"
@@ -110,8 +116,10 @@ awful.layout.layouts = {
 	awful.layout.suit.floating,
 	--lain.layout.termfair.center,
 	awful.layout.suit.floating,
+	-- awful.layout.suit.tile,
+	awful.layout.suit.floating,
+	-- awful.layout.suit.tile.left,
 	awful.layout.suit.tile,
-	awful.layout.suit.tile.left,
 	awful.layout.suit.tile.bottom,
 	awful.layout.suit.tile.top,
 	--awful.layout.suit.fair,
@@ -322,23 +330,23 @@ awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1
 {description = "focus the previous screen", group = "screen"}),
 awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
 {description = "jump to urgent client", group = "client"}),
-awful.key({ altkey,           }, "Tab",
-function ()
-	awful.client.focus.history.previous()
-	if client.focus then
-		client.focus:raise()
-	end
-end,
-{description = "go back", group = "client"}),
+-- awful.key({ altkey,           }, "Tab",
+-- function ()
+-- 	awful.client.focus.history.previous()
+-- 	if client.focus then
+-- 		client.focus:raise()
+-- 	end
+-- end,
+-- {description = "go back", group = "client"}),
 
--- -- modkey+Tab: cycle through all clients.
--- awful.key({ modkey }, "Tab", function(c)
---     cyclefocus.cycle({modifier="Super_L"})
--- end),
--- -- modkey+Shift+Tab: backwards
--- awful.key({ modkey, "Shift" }, "Tab", function(c)
---     cyclefocus.cycle({modifier="Super_L"})
--- end),
+-- modkey+Tab: cycle through all clients.
+awful.key({ modkey }, "Tab", function(c)
+    cyclefocus.cycle({modifier="Super_L"})
+end),
+-- modkey+Shift+Tab: backwards
+awful.key({ modkey, "Shift" }, "Tab", function(c)
+    cyclefocus.cycle({modifier="Super_L"})
+end),
 
 -- Alt-Tab: cycle through clients on the same screen.
 -- This must be a clientkeys mapping to have source_c available in the callback.
@@ -350,6 +358,12 @@ cyclefocus.key({ "Mod1", }, "Tab", {
     cycle_filters = { cyclefocus.filters.same_screen, cyclefocus.filters.common_tag },
     keys = {'Tab', 'ISO_Left_Tab'}  -- default, could be left out
 }),
+
+-- awful.key(
+-- { "Mod1" }, -- the example uses `modkey` == "Mod4", i.e. the `Super` key in the default rc.lua
+-- "Tab",
+-- function() cyclefocus.cycle({ modifier = "Alt_L" }) end, -- the example uses `Super_L` here
+-- { description = "cycle through clients", group = "client" }),
 
 -- Show/Hide Wibox
 awful.key({ modkey }, "b", function ()
@@ -451,6 +465,8 @@ awful.key({ altkey }, "m",
 function ()
 	os.execute(string.format("amixer -q set %s toggle", beautiful.volume.channel))
 	-- os.execute(string.format("amixer -q set %s toggle", beautiful.volume.togglechannel or beautiful.volume.channel))
+	-- os.execute(string.format("amixer -q set %s toggle", beautiful.volume.togglechannel or beautiful.volume.channel))
+    -- amixer -c 0 set Master playback 100% unmute
 	beautiful.volume.update()
 end,
 {description = "toggle mute", group = "hotkeys"}),
