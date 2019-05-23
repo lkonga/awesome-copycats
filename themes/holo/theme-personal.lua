@@ -123,28 +123,53 @@ local markup = lain.util.markup
 local blue   = "#80CCE6"
 local space3 = markup.font("Roboto 3", " ")
 
+-- -- Clock
+-- local mytextclock = wibox.widget.textclock(markup("#FFFFFF", space3 .. "%H:%M   " .. markup.font("Roboto 4", " ")))
+-- mytextclock.font = theme.font
+-- local clock_icon = wibox.widget.imagebox(theme.clock)
+-- local clockbg = wibox.container.background(mytextclock, theme.bg_focus, gears.shape.rectangle)
+-- local clockwidget = wibox.container.margin(clockbg, 0, 3, 5, 5)
+
 -- Clock
 local mytextclock = wibox.widget.textclock(markup("#FFFFFF", space3 .. "%H:%M   " .. markup.font("Roboto 4", " ")))
 mytextclock.font = theme.font
 local clock_icon = wibox.widget.imagebox(theme.clock)
 local clockbg = wibox.container.background(mytextclock, theme.bg_focus, gears.shape.rectangle)
 local clockwidget = wibox.container.margin(clockbg, 0, 3, 5, 5)
+-- local clockwidget = wibox.container.margin(clockbg, dpi(0), dpi(3), dpi(5), dpi(5))
 
 -- Calendar
 local mytextcalendar = wibox.widget.textclock(markup.fontfg(theme.font, "#FFFFFF", space3 .. "%d %b " .. markup.font("Roboto 5", " ")))
 local calendar_icon = wibox.widget.imagebox(theme.calendar)
 local calbg = wibox.container.background(mytextcalendar, theme.bg_focus, gears.shape.rectangle)
+-- local calendarwidget = wibox.container.margin(calbg, dpi(0), dpi(0), dpi(5), dpi(5))
 local calendarwidget = wibox.container.margin(calbg, 0, 0, 5, 5)
-lain.widget.calendar({
+theme.cal = lain.widget.cal({
     attach_to = { mytextclock, mytextcalendar },
-    cal                 = "/usr/bin/cal -h",
     notification_preset = {
         fg = "#FFFFFF",
         bg = theme.bg_normal,
         position = "bottom_right",
+        -- font = "Monospace 10"
         font = "Tamsyn Bold 10"
     }
 })
+--
+-- -- Calendar
+-- local mytextcalendar = wibox.widget.textclock(markup.fontfg(theme.font, "#FFFFFF", space3 .. "%d %b " .. markup.font("Roboto 5", " ")))
+-- local calendar_icon = wibox.widget.imagebox(theme.calendar)
+-- local calbg = wibox.container.background(mytextcalendar, theme.bg_focus, gears.shape.rectangle)
+-- local calendarwidget = wibox.container.margin(calbg, 0, 0, 5, 5)
+-- lain.widget.calendar({
+--     attach_to = { mytextclock, mytextcalendar },
+--     cal                 = "/usr/bin/cal -h",
+--     notification_preset = {
+--         fg = "#FFFFFF",
+--         bg = theme.bg_normal,
+--         position = "bottom_right",
+--         font = "Tamsyn Bold 10"
+--     }
+-- })
 
 --[[ Mail IMAP check
 -- commented because it needs to be set before use
