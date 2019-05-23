@@ -58,6 +58,9 @@ theme.widget_transparent = "#00000000"
 -- cpu temp widget
 theme.widget_temp                               = theme.icon_dir .. "/temp.png"
 
+-- hdd widget 
+theme.widget_hdd                               = theme.icon_dir .. "/hdd.png"
+
 theme.awesome_icon                              = theme.icon_dir .. "/awesome_icon_white.png"
 theme.awesome_icon_launcher                     = theme.icon_dir .. "/awesome_icon.png"
 theme.taglist_squares_sel                       = theme.icon_dir .. "/square_sel.png"
@@ -131,20 +134,20 @@ local clockbg = wibox.container.background(mytextclock, theme.bg_focus, gears.sh
 local clockwidget = wibox.container.margin(clockbg, 0, 3, 5, 5)
 
 -- Calendar
-local mytextcalendar = wibox.widget.textclock(markup.fontfg(theme.font, "#FFFFFF", space3 .. "%d %b " .. markup.font("Roboto 5", " ")))
-local calendar_icon = wibox.widget.imagebox(theme.calendar)
-local calbg = wibox.container.background(mytextcalendar, theme.bg_focus, gears.shape.rectangle)
-local calendarwidget = wibox.container.margin(calbg, 0, 0, 5, 5)
-lain.widget.calendar({
-    attach_to = { mytextclock, mytextcalendar },
-    cal                 = "/usr/bin/cal -h",
-    notification_preset = {
-        fg = "#FFFFFF",
-        bg = theme.bg_normal,
-        position = "bottom_right",
-        font = "Tamsyn Bold 10"
-    }
-})
+-- local mytextcalendar = wibox.widget.textclock(markup.fontfg(theme.font, "#FFFFFF", space3 .. "%d %b " .. markup.font("Roboto 5", " ")))
+-- local calendar_icon = wibox.widget.imagebox(theme.calendar)
+-- local calbg = wibox.container.background(mytextcalendar, theme.bg_focus, gears.shape.rectangle)
+-- local calendarwidget = wibox.container.margin(calbg, 0, 0, 5, 5)
+-- lain.widget.calendar({
+--     attach_to = { mytextclock, mytextcalendar },
+--     cal                 = "/usr/bin/cal -h",
+--     notification_preset = {
+--         fg = "#FFFFFF",
+--         bg = theme.bg_normal,
+--         position = "bottom_right",
+--         font = "Tamsyn Bold 10"
+--     }
+-- })
 
 --[[ Mail IMAP check
 -- commented because it needs to be set before use
@@ -249,14 +252,14 @@ local temp = lain.widget.temp({
 --     notification_preset = { bg = theme.bg_normal, font = "Monospace 9" },
 -- })
 
--- -- / fs
--- local fsicon = wibox.widget.imagebox(theme.widget_hdd)
--- theme.fs = lain.widget.fs({
---     notification_preset = { fg = theme.fg_normal, bg = theme.bg_normal, font = "xos4 Terminus 10" },
---     settings = function()
---         widget:set_markup(markup.font(theme.font, " " .. fs_now["/"].percentage .. "% "))
---     end
--- })
+-- / fs
+local fsicon = wibox.widget.imagebox(theme.widget_hdd)
+theme.fs = lain.widget.fs({
+    notification_preset = { fg = theme.fg_normal, bg = theme.bg_normal, font = "xos4 Terminus 10" },
+    settings = function()
+        widget:set_markup(markup.font(theme.font, " " .. fs_now["/"].percentage .. "% "))
+    end
+})
 
 -- ALSA volume bar
 theme.volume = lain.widget.alsabar({
@@ -421,9 +424,9 @@ function theme.at_screen_connect(s)
             -- battery_widget,
             cpuwidget,
             -- bottom_bar,
-            -- wibox.container.background(fsicon, theme.bg_focus),
+            wibox.container.background(fsicon, theme.bg_focus),
             -- fsicon,
-            -- wibox.container.background(theme.fs.widget, theme.bg_focus),
+            wibox.container.background(theme.fs.widget, theme.bg_focus),
             tempicon,
             temp.widget,
             bottom_bar,

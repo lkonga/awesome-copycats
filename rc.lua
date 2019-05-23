@@ -56,7 +56,6 @@ local function run_once(cmd_arr)
 		awful.spawn.with_shell(string.format("pgrep -u $USER -x %s > /dev/null || (%s)", findme, cmd))
 	end
 end
-
 -- run_once({ "xrandr --output eDP1 --scale 0.8x0.8","export GDK_SCALE=2","export GDK_DPI_SCALE=0.6","xrandr --dpi 271","xinput disable 9","xinput disable 8","unclutter -root","play-with-mpv","xscreensaver -nosplash", "mpd"}) -- entries must be comma-separated
 os.execute("killall caffeine-indicator")
 -- run_once({ "unclutter --root","xscreensaver -nosplash", "mpd ~/.mpd/mpd.conf","xmodmap ~/.Xmodmap_i35","nm-applet","redshift-gtk","play-with-mpv", "caffeine-indicator", "syndaemon -i 0.50 -m 0.10 -d -K"}) -- entries must be comma-separated
