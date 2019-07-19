@@ -203,8 +203,8 @@ local play_pause_icon = wibox.widget.imagebox(theme.play)
 theme.mpd = lain.widget.mpd({
     settings = function ()
         if mpd_now.state == "play" then
-            mpd_now.artist = mpd_now.artist:upper():gsub("&.-;", string.lower)
-            mpd_now.title = mpd_now.title:upper():gsub("&.-;", string.lower)
+            mpd_now.artist = string.sub(mpd_now.artist:upper():gsub("&.-;", string.lower),1,20) .. ".."
+            mpd_now.title = string.sub(mpd_now.title:upper():gsub("&.-;", string.lower),1,20) .. ".."
             widget:set_markup(markup.font("Roboto 4", " ")
                               .. markup.font(theme.taglist_font,
                               " " .. mpd_now.artist
@@ -264,9 +264,11 @@ local bat = lain.widget.bat({
 -- Coretemp
 local tempicon = wibox.widget.imagebox(theme.widget_temp)
 local temp = lain.widget.temp({
+    tempfile = "/sys/class/hwmon/hwmon1/temp1_input",
     settings = function()
         widget:set_markup(markup.font(theme.font, " " .. coretemp_now .. "°C "))
     end
+
 })
 
  -- -- fs

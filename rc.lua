@@ -60,7 +60,7 @@ end
 -- run_once({ "xrandr --output eDP1 --scale 0.8x0.8","export GDK_SCALE=2","export GDK_DPI_SCALE=0.6","xrandr --dpi 271","xinput disable 9","xinput disable 8","unclutter -root","play-with-mpv","xscreensaver -nosplash", "mpd"}) -- entries must be comma-separated
 os.execute("killall caffeine-indicator")
 -- run_once({ "unclutter --root","xscreensaver -nosplash", "mpd ~/.mpd/mpd.conf","xmodmap ~/.Xmodmap_i35","nm-applet","redshift-gtk","play-with-mpv", "caffeine-indicator", "syndaemon -i 0.50 -m 0.10 -d -K"}) -- entries must be comma-separated
-run_once({ "unclutter --root","xscreensaver -nosplash", "mpd ~/.mpd/mpd.conf", "urxvtd -q -f -o", "nm-applet","redshift-gtk","play-with-mpv", "caffeine-indicator", "syndaemon -i 0.50 -m 0.10 -d -K"}) -- entries must be comma-separated
+run_once({ "unclutter --root","xscreensaver -nosplash", "mpd ~/.mpd/mpd.conf", "urxvtd -q -f -o", "nm-applet","redshift-gtk","play-with-mpv", "caffeine-indicator", "syndaemon -i 0.50 -m 0.10 -d -K", "rescuetime"}) -- entries must be comma-separated
 -- }}}
 
 -- run_once({"xrandr --dpi 271"}) -- we want 267? as this is actual dpi of a 3000x2000
@@ -68,8 +68,8 @@ run_once({ "unclutter --root","xscreensaver -nosplash", "mpd ~/.mpd/mpd.conf", "
 -- run_once({"xrandr --dpi 160"}) -- this sets 275? but we want 267?
 -- run_once({"xrandr --dpi 96"}) -- this sets 275? but we want 267?
 --
--- run_once({"xrandr --dpi 192"}) -- this sets 275? but we want 267?
-run_once({"xrandr --dpi 192"}) -- this yields bigger fonts on awesome wm and bigger chrome fonts (than 175) - terminal fonts seems to remain unchanged?
+run_once({"xrandr --dpi 192"}) -- this sets 275? but we want 267?
+-- run_once({"xrandr --dpi 192"}) -- this yields bigger fonts on awesome wm and bigger chrome fonts (than 175) - terminal fonts seems to remain unchanged?
 -- run_once({"xrandr --dpi 175"}) -- this sets 275? but we want 267?
 os.execute("sleep 1")
 -- run_once({"xmodmap ~/.Xmodmap_i35"}) 
@@ -115,7 +115,7 @@ awful.layout.layouts = {
 	-- lain.layout.termfair,
 	awful.layout.suit.floating,
 	--lain.layout.termfair.center,
-	awful.layout.suit.floating,
+	awful.layout.suit.tile.top,
 	-- awful.layout.suit.tile,
 	awful.layout.suit.floating,
 	-- awful.layout.suit.tile.left,
@@ -435,8 +435,8 @@ awful.key({ modkey, }, "z", function () awful.screen.focused().quake:toggle() en
 {description = "dropdown application", group = "launcher"}),
 
 -- Widgets popups
-awful.key({ altkey, }, "c", function () if beautiful.cal then beautiful.cal.show(7) end end,
-              {description = "show calendar", group = "widgets"}),
+-- awful.key({ altkey, }, "c", function () if beautiful.cal then beautiful.cal.show(7) end end,
+--               {description = "show calendar", group = "widgets"}),
 -- awful.key({ altkey, "Control" }, "c", function () lain.widget.calendar.show(7) end,
 -- {description = "show calendar", group = "widgets"}),
 awful.key({ altkey, }, "h", function () if beautiful.fs then beautiful.fs.show(7) end end,
